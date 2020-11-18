@@ -42,9 +42,10 @@ func main() {
   if err != nil {
       log.Fatalf("unable to load SDK config, %v", err)
   }
-  const ServiceID = "ec2imds"
+
   md_svc := ec2imds.NewFromConfig(cfg)
-  result, err := md_svc.GetRegion(md_svc)
+  ctx := context.Background
+  result, err := md_svc.GetRegion(ctx, nil)
   log(result.Region)
 
 	hostname, _ = os.Hostname()
