@@ -33,7 +33,7 @@ func main() {
 
 	logger := log.New(os.Stdout, AppName+":", log.LstdFlags)
 
-	logger.Println("Starting ", AppName)
+	logger.Println("Starting", AppName)
 
   // Using the SDK's default configuration, loading additional config
   // and credentials values from the environment variables, shared
@@ -45,12 +45,23 @@ func main() {
 
   ctx := context.Background()
 
-  md_svc := ec2imds.NewFromConfig(cfg)
-  result, err := md_svc.GetRegion(ctx, nil)
-  logger.Println("The region is: ", result.Region)
+  client := ec2imds.NewFromConfig(cfg)
+  region, err := client.GetRegion(ctx, nil)
+  if err != nil {
+    log.Fatalf("expect no error, got %v", err)
+  }
+  logger.Println("The region is:", region.Region)
+
+  resp, err := client.GetInstanceIdentityDocument(ctx, nil)
+  if err != nil {
+    log.Fatalf("expect no error, got %v", err)
+  }
+  if resp == nil {
+    log.Fatalf("expect resp, got none")
+  }
 
 	hostname = "hostname"
-	zone = result.Region
+	zone = resp.AvailabilityZone
 	node = "node"
 	cluster = "cluster"
 	message = lookupEnvOrString("K8S_DEMO_APP_MESSAGE", "Hello K8s World!")
