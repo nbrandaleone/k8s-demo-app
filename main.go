@@ -10,7 +10,9 @@ import (
 	"os/signal"
 	"time"
 
-	"cloud.google.com/go/compute/metadata"
+  "github.com/aws/aws-sdk-go-v2/aws"
+  "github.com/aws/aws-sdk-go-v2/config"
+  "github.com/aws/aws-sdk-go-v2/ec2imds"
 )
 
 const AppName = "k8s-demo-app"
@@ -33,8 +35,20 @@ func main() {
 
 	logger.Println("Starting")
 
+  // Using the SDK's default configuration, loading additional config
+  // and credentials values from the environment variables, shared
+  // credentials, and shared configuration files
+  cfg, err := config.LoadDefaultConfig(config.WithRegion("us-west-2"))
+  if err != nil {
+      log.Fatalf("unable to load SDK config, %v", err)
+  }
+  const ServiceID = "ec2imds"
+  md_svc := ServiceID.New(cfg)
+  result, err := md_svc.GetRegion(md_svc)
+  log(result.Region)
+
 	hostname, _ = os.Hostname()
-	zone, _ = metadata.Zone()
+	zone, _ = result.Region
 	node, _ = metadata.Hostname()
 	cluster, _ = metadata.InstanceAttributeValue("cluster-name")
 	message = lookupEnvOrString("K8S_DEMO_APP_MESSAGE", "Hello K8s World!")

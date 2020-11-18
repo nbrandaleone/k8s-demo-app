@@ -1,5 +1,8 @@
-module github.com/stepanstipl/k8s-demo-app
+module k8s-demo-app
 
-go 1.13
+go 1.15
 
-require cloud.google.com/go v0.57.0
+require (
+	github.com/aws/aws-sdk-go-v2 v0.29.0 // indirect
+	github.com/aws/aws-sdk-go-v2/config v0.2.2 // indirect
+)

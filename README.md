@@ -1,8 +1,10 @@
 # K8s Demo App
 
-Simple web application that displays a simple message and information about Pod, GKE Cluster, GKE Node and Zone serving the request.
+Simple web application that displays a simple message and information about Pod, EKS Cluster, AWS Node and Zone serving the request.
 
 The application is also published as a container image [quay.io/stepanstipl/k8s-demo-app][1]
+
+Note: This app is based off the following repo, originally written for GCP: https://github.com/stepanstipl/k8s-demo-app
 
 [1]: https://quay.io/repository/stepanstipl/k8s-demo-app
 
