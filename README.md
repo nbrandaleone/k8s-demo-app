@@ -12,7 +12,7 @@ Note: This app is based off the following repo, originally written for GCP: http
 
 ## Deployment
 
-See `deploy.yaml` for simple deployment example.
+See `deployment.yaml` for simple deployment example.
 
 The application exposes health-check `/healthz` endpoint.
 
