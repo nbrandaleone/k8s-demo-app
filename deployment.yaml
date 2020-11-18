@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: k8-demo
+spec:
+  selector:
+    matchLabels:
+      app: k8-demo
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: k8-demo
+    spec:
+      containers:
+      - name: k8s-demo-app
+        image: nbrandaleone/k8s-demo-app:latest
+        env:
+        - name: K8S_DEMO_APP_MESSAGE
+          value: "Hello FOOs!"
+        - name: MY_POD_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.name
+        - name: MY_POD_IP
+          valueFrom:
+            fieldRef:
+              fieldPath: status.podIP
+        livenessProbe:
+          httpGet:
+            path: /healthz
+            port: http
+        ports:
+        - name: http
+          containerPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: k8demo-service
+spec:
+  type: LoadBalancer
+  selector:
+    app: k8-demo
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8080

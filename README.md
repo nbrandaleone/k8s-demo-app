@@ -21,3 +21,4 @@ The application exposes health-check `/healthz` endpoint.
 Serving port (defaults to `8080`) can be parametrised using the `-listen-addr` flag or `K8S_DEMO_APP_LISTEN_ADDR` environment variable.
 
 Displayed message can be parametrised by setting the `K8S_DEMO_APP_MESSAGE` variable.
+kubectl apply -f https://k8s.io/examples/pods/inject/dapi-envars-pod.yaml
