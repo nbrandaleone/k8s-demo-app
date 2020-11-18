@@ -43,7 +43,7 @@ func main() {
       log.Fatalf("unable to load SDK config, %v", err)
   }
   const ServiceID = "ec2imds"
-  md_svc := ec2imds.New(cfg)
+  md_svc := ec2imds.NewFromConfig(cfg)
   result, err := md_svc.GetRegion(md_svc)
   log(result.Region)
 
