@@ -46,7 +46,7 @@ func main() {
   md_svc := ec2imds.NewFromConfig(cfg)
   ctx := context.Background()
   result, err := md_svc.GetRegion(ctx, nil)
-  log(result.Region)
+  logger.Println(result.Region)
 
 	hostname, _ = os.Hostname()
 	zone, _ = result.Region
