@@ -17,7 +17,7 @@ spec:
         image: nbrand/k8s-demo-app:latest
         env:
         - name: K8S_DEMO_APP_MESSAGE
-          value: "Hello FOOs!"
+          value: "Hello Kubernetes on AWS!"
         - name: MY_POD_NAME
           valueFrom:
             fieldRef:
