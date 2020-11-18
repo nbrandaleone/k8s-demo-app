@@ -48,10 +48,10 @@ func main() {
   result, err := md_svc.GetRegion(ctx, nil)
   logger.Println(result.Region)
 
-	hostname, _ = os.Hostname()
-	zone, _ = result.Region
-	node, _ = metadata.Hostname()
-	cluster, _ = metadata.InstanceAttributeValue("cluster-name")
+	hostname = "hostname"
+	zone = result.Region
+	node = "node"
+	cluster = "cluster"
 	message = lookupEnvOrString("K8S_DEMO_APP_MESSAGE", "Hello K8s World!")
 
 	// HTTP Server
