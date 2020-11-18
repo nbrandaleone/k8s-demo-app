@@ -60,9 +60,9 @@ func main() {
     log.Fatalf("expect resp, got none")
   }
 
-	hostname = lookupEnvOrString("MY_POD_NAME", "Pod Name")
 	zone = resp.AvailabilityZone
-	node = lookupEnvOrString(MY_NODE_NAME, resp.InstanceID)
+	node = resp.InstanceID
+	hostname = lookupEnvOrString("MY_POD_NAME", "Pod Name")
 	cluster = lookupEnvOrString("MY_POD_IP", "Pod IP")
 	message = lookupEnvOrString("K8S_DEMO_APP_MESSAGE", "Hello K8s World!")
 
