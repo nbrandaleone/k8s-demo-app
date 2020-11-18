@@ -33,7 +33,7 @@ func main() {
 
 	logger := log.New(os.Stdout, AppName+":", log.LstdFlags)
 
-	logger.Println("Starting")
+	logger.Println("Starting %v", AppName)
 
   // Using the SDK's default configuration, loading additional config
   // and credentials values from the environment variables, shared
@@ -43,10 +43,11 @@ func main() {
       log.Fatalf("unable to load SDK config, %v", err)
   }
 
-  md_svc := ec2imds.NewFromConfig(cfg)
   ctx := context.Background()
+
+  md_svc := ec2imds.NewFromConfig(cfg)
   result, err := md_svc.GetRegion(ctx, nil)
-  logger.Println(result.Region)
+  logger.Println("The region is: %v", result.Region)
 
 	hostname = "hostname"
 	zone = result.Region
