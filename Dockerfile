@@ -1,4 +1,4 @@
-FROM golang:1.13.6-alpine3.11 AS build
+FROM golang:1.15.5-alpine3.12 AS build
 
 ENV CGO_ENABLED=0 \
     LANG=C.UTF-8
