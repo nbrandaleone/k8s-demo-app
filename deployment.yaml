@@ -15,6 +15,7 @@ spec:
       containers:
       - name: k8s-demo-app
         image: nbrand/k8s-demo-app:0.1
+        # image: nbrand/k8s-demo-app:ab885ed-dirty
         imagePullPolicy: Always
         env:
         - name: K8S_DEMO_APP_MESSAGE

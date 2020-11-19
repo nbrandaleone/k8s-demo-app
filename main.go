@@ -18,13 +18,15 @@ import (
 const AppName = "k8s-demo-app"
 
 var (
-	listenAddr string
-	healthy    bool
-	hostname   string
-	zone       string
-	node       string
-	cluster    string
-	message    string
+	listenAddr    string
+	healthy       bool
+	hostname      string
+	zone          string
+	node          string
+	cluster       string
+	message       string
+  instanceType  string
+  arch          string
 )
 
 func main() {
@@ -62,6 +64,8 @@ func main() {
 
 	zone = resp.AvailabilityZone
 	node = resp.InstanceID
+  instanceType = resp.InstanceType
+  arch = resp.Architecture
 	hostname = lookupEnvOrString("MY_POD_NAME", "Pod Name")
 	cluster = lookupEnvOrString("MY_POD_IP", "Pod IP")
 	message = lookupEnvOrString("K8S_DEMO_APP_MESSAGE", "Hello K8s World!")
@@ -135,12 +139,14 @@ func index() http.Handler {
 		tmpl := template.Must(template.ParseFiles("template.html"))
 
 		tempData := map[string]interface{}{
-			"Zone":     zone,
-			"Hostname": hostname,
-			"Node":     node,
-			"Cluster":  cluster,
-			"Message":  message,
-			"Path":     r.URL.Path,
+			"Zone":         zone,
+			"Hostname":     hostname,
+			"Node":         node,
+			"Cluster":      cluster,
+			"Message":      message,
+      "InstanceType": instanceType,
+      "Arch":         arch,
+			"Path":         r.URL.Path,
 		}
 
 		tmpl.Execute(w, tempData)

@@ -1,0 +1,11 @@
+apiVersion: skaffold/v2beta9
+kind: Config
+metadata:
+  name: k-s-demo-app
+build:
+  artifacts:
+  - image: nbrand/k8s-demo-app
+deploy:
+  kubectl:
+    manifests:
+    - deployment.yaml

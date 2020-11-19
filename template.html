@@ -4,6 +4,11 @@
     <title>K8s Demo App</title>
     <link rel="stylesheet" href="/static/picnic.min.css">
     <link rel="stylesheet" href="/static/site.css">
+    <style>
+      .myCoolColor {
+        background: #85144b
+      }
+    </style>
   </head>
   <body><main class="site">
     <article class="card">
@@ -14,7 +19,10 @@
         <h3>Pod Name: <span class="label">{{ .Hostname }}</span></h3>
         <h3>Pod IP Address: <span class="label success">{{ .Cluster }}</span></h3>
         <h3>Instance ID: <span class="label warning">{{ .Node }}</span></h3>
+        <!--        <h3>Instance Type: <span class="label ">{{ .InstanceType }}</span></h3> -->
         <h3>Zone: <span class="label error">{{ .Zone }}</span></h3>
+        <h3>Instance Type: <button disabled>{{ .InstanceType }}</button></h3>
+        <h3>Architecture: <button disabled>{{ .Arch }}</button></h3>
 	Received request on path <code>{{ .Path }}</code>.
       </footer>
     </article>
