@@ -10,23 +10,23 @@ import (
 	"os/signal"
 	"time"
 
-//  "github.com/aws/aws-sdk-go-v2/aws"
-  "github.com/aws/aws-sdk-go-v2/config"
-  "github.com/aws/aws-sdk-go-v2/ec2imds"
+	//  "github.com/aws/aws-sdk-go-v2/aws"
+	"github.com/aws/aws-sdk-go-v2/config"
+	"github.com/aws/aws-sdk-go-v2/ec2imds"
 )
 
 const AppName = "k8s-demo-app"
 
 var (
-	listenAddr    string
-	healthy       bool
-	hostname      string
-	zone          string
-	node          string
-	cluster       string
-	message       string
-  instanceType  string
-  arch          string
+	listenAddr   string
+	healthy      bool
+	hostname     string
+	zone         string
+	node         string
+	cluster      string
+	message      string
+	instanceType string
+	arch         string
 )
 
 func main() {
@@ -37,35 +37,35 @@ func main() {
 
 	logger.Println("Starting", AppName)
 
-  // Using the SDK's default configuration, loading additional config
-  // and credentials values from the environment variables, shared
-  // credentials, and shared configuration files
-  cfg, err := config.LoadDefaultConfig(config.WithRegion("us-west-2"))
-  if err != nil {
-      log.Fatalf("unable to load SDK config, %v", err)
-  }
+	// Using the SDK's default configuration, loading additional config
+	// and credentials values from the environment variables, shared
+	// credentials, and shared configuration files
+	cfg, err := config.LoadDefaultConfig(config.WithRegion("us-west-2"))
+	if err != nil {
+		log.Fatalf("unable to load SDK config, %v", err)
+	}
 
-  ctx := context.Background()
+	ctx := context.Background()
 
-  client := ec2imds.NewFromConfig(cfg)
-  region, err := client.GetRegion(ctx, nil)
-  if err != nil {
-    log.Fatalf("expect no error, got %v", err)
-  }
-  logger.Println("The region is:", region.Region)
+	client := ec2imds.NewFromConfig(cfg)
+	region, err := client.GetRegion(ctx, nil)
+	if err != nil {
+		log.Fatalf("expect no error, got %v", err)
+	}
+	logger.Println("The region is:", region.Region)
 
-  resp, err := client.GetInstanceIdentityDocument(ctx, nil)
-  if err != nil {
-    log.Fatalf("expect no error, got %v", err)
-  }
-  if resp == nil {
-    log.Fatalf("expect resp, got none")
-  }
+	resp, err := client.GetInstanceIdentityDocument(ctx, nil)
+	if err != nil {
+		log.Fatalf("expect no error, got %v", err)
+	}
+	if resp == nil {
+		log.Fatalf("expect resp, got none")
+	}
 
 	zone = resp.AvailabilityZone
 	node = resp.InstanceID
-  instanceType = resp.InstanceType
-  arch = resp.Architecture
+	instanceType = resp.InstanceType
+	arch = resp.Architecture
 	hostname = lookupEnvOrString("MY_POD_NAME", "Pod Name")
 	cluster = lookupEnvOrString("MY_POD_IP", "Pod IP")
 	message = lookupEnvOrString("K8S_DEMO_APP_MESSAGE", "Hello K8s World!")
@@ -144,8 +144,8 @@ func index() http.Handler {
 			"Node":         node,
 			"Cluster":      cluster,
 			"Message":      message,
-      "InstanceType": instanceType,
-      "Arch":         arch,
+			"InstanceType": instanceType,
+			"Arch":         arch,
 			"Path":         r.URL.Path,
 		}
 
